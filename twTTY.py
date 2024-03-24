@@ -7,7 +7,6 @@ _tty: twTTY_DEBUG.tty_debug = twTTY_DEBUG.tty_debug()
 
 lut: dict[str, str] = {
     '/': '//',
-    '\\': '///',
     '\n': '\r\n',
     '!': '/?',
     '"': "'",
@@ -26,7 +25,10 @@ lut: dict[str, str] = {
     '@': '/at',
     'Ä': 'AE',
     'Ö': 'OE',
-    'Ü': 'UE'
+    'Ü': 'UE',
+    'ä': 'ae',
+    'ö': 'oe',
+    'ü': 'ue'
 }
 
     #TODO: Terminal-Debug-Out
@@ -41,9 +43,20 @@ class tty():
         return out
 
     def _read_conv(self, _in: str) -> str:
-        out = _in.upper()
+        out: str = _in.lower()
+        print("_read_conv (lower): " + out)
         for key, value in lut.items():
-            out: str = out.replace(value, key)
+            out = out.replace(value, key)
+        print("_read_conv (lut): " + out)
+        c: int = out.find('//')     #TODO! ersetzen mit if [c+1] == '/' aber c+2 != /
+        while c > -1:
+            try:
+                out = out[:c+1] + out[c+2].upper() + out[c+3:]
+            except:
+                out = out[:c+1] + out[c+2].upper()
+            c = out.find('//')
+        print("_read_conv (capitals): " + out)
+
         return out
     
     def _write(self, _out: str, single_slash: bool = False) -> None:
