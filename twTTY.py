@@ -7,6 +7,10 @@ _tty: ed1000.TelexED1000SC = ed1000.TelexED1000SC()
 #_tty: twTTY_DEBUG.tty_debug = twTTY_DEBUG.tty_debug()
 
 lut: dict[str, str] = {
+<<<<<<< HEAD
+=======
+    '/': '//',
+>>>>>>> 0cbc3dba99f5f525d48192683d8042c1734338c3
     '\n': '\r\n',
     '!': '/?',
     '"': "'",
@@ -48,8 +52,20 @@ class tty():
         for key, value in lut.items():
             out = out.replace(value, key)
         print("_read_conv (lut): " + out)
+<<<<<<< HEAD
         out = self._read_conv_slashPBE(out)
         print("_read_conv (capitals): " + out)
+=======
+        c: int = out.find('//')     #TODO! ersetzen mit if [c+1] == '/' aber c+2 != /
+        while c > -1:
+            try:
+                out = out[:c+1] + out[c+2].upper() + out[c+3:]
+            except:
+                out = out[:c+1] + out[c+2].upper()
+            c = out.find('//')
+        print("_read_conv (capitals): " + out)
+
+>>>>>>> 0cbc3dba99f5f525d48192683d8042c1734338c3
         return out
     
     def _read_conv_slashHandler(self, _in: str) -> str:

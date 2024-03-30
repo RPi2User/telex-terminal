@@ -5,7 +5,7 @@ class tty_debug:
         print(_in, end="")
         
     def read(self) -> str:
-        return input() + "\n"
+        return input().upper() + "\n"
     
     def _check_commands(self, _in: str) -> None:
         print("[TTY_CMD] " + repr(_in))
