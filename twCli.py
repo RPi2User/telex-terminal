@@ -1,7 +1,9 @@
 import os
 import subprocess
-#import twSSH
+import twSSH
 import twTTY
+# import pyte promising!
+import pty
 
 tty = twTTY.tty()
 
@@ -16,8 +18,16 @@ class cli:
     def cmd(*_cmd) -> str:
         return str(subprocess.check_output(*_cmd, universal_newlines=True))
     
+    def local(self) -> None:
+        while True:
+            p: subprocess = subprocess.Popen("bash", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, text=True)
+            tty_stdin: str = tty._read("lcl:/")
+            stdout, stderr = p.communicate(tty_stdin.lower())
+            tty._write(str(stdout + stderr))
+        
+    
     def w(self) -> str:
-        print(self.cmd("ps", "-a", "-u", "-x"))
+        #print(self.cmd("ps", "-a", "-u", "-x"))
         return str(subprocess.check_output("w", universal_newlines=True))
     
     def psa(self) -> str:
@@ -49,29 +59,33 @@ class cli:
     
     def debug(self) -> str:
         return """
-  `.::///+:/-.        --///+//-:``    florian@FLORIAN-MAIN 
- `+oooooooooooo:   `+oooooooooooo:    -------------------- 
-  /oooo++//ooooo:  ooooo+//+ooooo.    OS: openSUSE Tumbleweed x86_64 
-  `+ooooooo:-:oo-  +o+::/ooooooo:     Host: MS-7B79 2.0 
-   `:oooooooo+``    `.oooooooo+-      Kernel: 6.7.5-1-default 
-     `:++ooo/.        :+ooo+/.`       Uptime: 4 hours, 42 mins 
-        ...`  `.----.` ``..           Packages: 3354 (rpm), 18 (flatpak) 
-     .::::-``:::::::::.`-:::-`        Shell: bash 5.2.26 
-    -:::-`   .:::::::-`  `-:::-       Resolution: 1920x1200, 1920x1200, 1920x1200 
-   `::.  `.--.`  `` `.---.``.::`      DE: Cinnamon 6.0.0 
-       .::::::::`  -::::::::` `       WM: Mutter (Muffin) 
- .::` .:::::::::- `::::::::::``::.    WM Theme: Linux Mint (Menta) 
--:::` ::::::::::.  ::::::::::.`:::-   Theme: Menta [GTK2/3] 
-::::  -::::::::.   `-::::::::  ::::   Icons: Adwaita [GTK2/3] 
--::-   .-:::-.``....``.-::-.   -::-   Terminal: gnome-terminal 
- .. ``       .::::::::.     `..`..    CPU: AMD Ryzen 7 3700X (16) @ 3.600GHz 
-   -:::-`   -::::::::::`  .:::::`     GPU: NVIDIA GeForce RTX 2070 SUPER 
-   :::::::` -::::::::::` :::::::.     Memory: 8385MiB / 32029MiB 
+         1         2         3         4         5         6            
+123456789012345678901234567890123456789012345678901234567890123456789
+
+  `.::///+:/-.        --///+//-:``  pi@raspberrypi 
+ `+oooooooooooo:   `+oooooooooooo:  -------------- 
+  /oooo++//ooooo:  ooooo+//+ooooo.  OS: Raspbian GNU/Linux 
+  `+ooooooo:-:oo-  +o+::/ooooooo:      12 (bookworm) armv7l 
+   `:oooooooo+``    `.oooooooo+-    Host: Raspberry Pi 2B   
+     `:++ooo/.        :+ooo+/.`     Kernel: 6.1.0-rpi8-v7 
+        ...`  `.----.` ``..         Uptime: 31 mins   
+     .::::-``:::::::::.`-:::-`      Packages: 1072 (dpkg)   
+    -:::-`   .:::::::-`  `-:::-     Shell: bash 5.2.15   
+   `::.  `.--.`  `` `.---.``.::`    Terminal: /dev/pts/5
+       .::::::::`  -::::::::` `     CPU: BCM2835 (4)@900MHz
+ .::` .:::::::::- `::::::::::``::.  Memory: 544MiB / 921MiB 
+-:::` ::::::::::.  ::::::::::.`:::-                           
+::::  -::::::::.   `-::::::::  ::::                           
+-::-   .-:::-.``....``.-::-.   -::-
+ .. ``       .::::::::.     `..`..
+   -:::-`   -::::::::::`  .:::::`
+   :::::::` -::::::::::` :::::::.
    .:::::::  -::::::::. ::::::::
     `-:::::`   ..--.`   ::::::.
       `...`  `...--..`  `...`
             .::::::::::
              `.-::::-`
+
 """
     
     def exit(self) -> None:

@@ -10,7 +10,7 @@ class parser():
     def parse(self, _in: str ) -> str:
         _out: str = ""
         _prompt: str = "/"
-        match _in:
+        match _in.upper():          # Quick and dirty hack!
             case '?': t._write(c.help())
             case 'HELP': t._write(c.help())
             case 'USE': t._write(c.usage())

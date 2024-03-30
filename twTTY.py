@@ -1,19 +1,18 @@
-#import txDevED1000SC as ed1000
-import twTTY_DEBUG
+import txDevED1000SC as ed1000
+#import twTTY_DEBUG
 import time
+import re
 
-#_tty: ed1000.TelexED1000SC = ed1000.TelexED1000SC()
-_tty: twTTY_DEBUG.tty_debug = twTTY_DEBUG.tty_debug()
+_tty: ed1000.TelexED1000SC = ed1000.TelexED1000SC()
+#_tty: twTTY_DEBUG.tty_debug = twTTY_DEBUG.tty_debug()
 
 lut: dict[str, str] = {
-    '/': '//',
-    '\\': '///',
     '\n': '\r\n',
     '!': '/?',
     '"': "'",
-    '$': '//s',
-    '%': '//p',
-    '&': '//a',
+    '$': '/4',
+    '%': '/5',
+    '&': '/6',
     '*': '/+',
     '|': '/:',
     ';': '/,',
@@ -26,7 +25,10 @@ lut: dict[str, str] = {
     '@': '/at',
     'Ä': 'AE',
     'Ö': 'OE',
-    'Ü': 'UE'
+    'Ü': 'UE',
+    'ä': 'ae',
+    'ö': 'oe',
+    'ü': 'ue'
 }
 
     #TODO: Terminal-Debug-Out
@@ -41,11 +43,42 @@ class tty():
         return out
 
     def _read_conv(self, _in: str) -> str:
-        out = _in.upper()
+        out: str = _in.lower()
+        print("_read_conv (lower): " + out)
         for key, value in lut.items():
-            out: str = out.replace(value, key)
+            out = out.replace(value, key)
+        print("_read_conv (lut): " + out)
+        out = self._read_conv_slashPBE(out)
+        print("_read_conv (capitals): " + out)
         return out
     
+    def _read_conv_slashHandler(self, _in: str) -> str:
+        out: str = _in
+        while out.__contains__('/'):
+            for c in range(len(out) -1 ):
+                if out[c] == '/' and c < len(out):
+                    out = out[:c] + out[c+1].upper() + out[c+2:]
+            out = out.replace('°', '/')
+        return out
+    
+    def _read_conv_slashPBE(self, _in: str) -> str:
+        s: str = _in.lower()
+
+        matches = list(re.finditer(r'\/[a-z]', s))[::-1]
+        for match in matches:
+            i=match.span()[0]
+            checki = s[i-1] != "/"
+            if checki:
+                s = s[:i] + s[i+1].upper() + s[i+2:]
+        s = s.replace("//", "/")
+
+        matches = list(re.finditer(r'\/\/[a-z]', s))[::-1]
+        for match in matches:
+            slash = match.span()[0]
+            capital = match.span()[1] -1
+            s = s[:slash+1] + s[capital].upper() + s[capital + 1:]
+        return s
+
     def _write(self, _out: str, single_slash: bool = False) -> None:
         _out = self._write_conv(_out)
         if single_slash: _out = _out.replace('//', '/')

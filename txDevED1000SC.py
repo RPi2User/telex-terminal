@@ -168,7 +168,7 @@ class TelexED1000SC(txBase.TelexBase):
     def thread_tx(self):
         """Handler for sending tones."""
 
-        devindex = None
+        devindex = 1
         baudrate = 50
         send_f0 = 500
         send_f1 = 700
@@ -298,7 +298,7 @@ class TelexED1000SC(txBase.TelexBase):
         offline_delay_counter = 0
         quick_scanning = False
 
-        devindex = None
+        devindex = None                # Set Device 2 as default
         baudrate = 50
 
         # One slice is a quarter of a bit or 5 ms
