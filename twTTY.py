@@ -31,7 +31,8 @@ lut: dict[str, str] = {
     'ü': 'ue'
 }
 
-    #TODO: Terminal-Debug-Out
+    #TODO: Terminal-Debug-Out -> Done, will removed with next commit
+    #TODO: Housekeeping, Code-optimization especially for the _read-routines
 
 class tty():
 

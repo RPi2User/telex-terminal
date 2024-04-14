@@ -15,6 +15,7 @@ class parser():
             case 'HELP': t._write(c.help(), single_slash=True)
             case 'USE': t._write(c.usage())
             case 'USAGE': t._write(c.usage())
+            case 'WHOAMI': t._write(c.whoami())
             case 'DATE': t._write(c.date())
             case 'BYE': c.exit()
             case 'DEBUG': t._write(c.debug(), single_slash=True)

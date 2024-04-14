@@ -39,6 +39,9 @@ class cli:
     def cal(self) -> str:
         return str(subprocess.check_output(["ncal", "-w", "-b", "-h"], universal_newlines=True))
     
+    def whoami(self) -> str:
+        return str(subprocess.check_output("whoami", universal_newlines=True))
+    
     def uname(self) -> str:
         return str(subprocess.check_output(["uname", "-a"], universal_newlines=True))
     
