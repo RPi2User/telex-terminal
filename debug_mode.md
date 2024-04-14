@@ -28,3 +28,17 @@ twTTY_DEBUG has three major Methods:
 
 Regardless the python-default `print` and `input` is line based.
 
+## Enter debug mode
+
+Edit twTTY.py:
+
+1. add `import twTTY_DEBUG`
+2. create Object `_tty` with `_tty: twTTY_DEBUG.tty_debug = twTTY_DEBUG.tty_debug()`
+3. Comment out `_tty: ed1000.TelexED1000SC = ed1000.TelexED1000SC()`
+
+Run program
+
+
+## Leave debug mode
+
+Revert Changes from Chapter "Enter debug mode"
