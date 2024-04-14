@@ -9,4 +9,22 @@ This class will transform your typical Terminal into a Teletype.
 
 ### Differences real TTY <-> twTTY_DEBUG
 
-By default this software is character based. 
+By default a teletype is character based.
+So this Software listens to a `\n`-Keypress. My SEL LO 3000 has a `return` key.
+This sends `\r\n` via the Line-Adaptor-Module (LAT).
+
+After every output from twTTY a `prompt` is added.
+This is a string with `\r\n` appended.
+
+The default prompt is `/\r\n`. This three chars are the absolute minimum, this software creates.
+
+twTTY_DEBUG has three major Methods:
+
+- twTTY_DEBUG.write() -> Prints output via `python.print` to terminal
+- twTTY_DEBUG.read() -> Reads input via `python.input` from Terminal
+- twTTY_DEBUG._check_commands() -> Prints Commands for Line initiation / termination to Terminal.
+- twTTY_DEBUG.exit() -> does nothing, no session is terminated
+
+
+Regardless the python-default `print` and `input` is line based.
+
