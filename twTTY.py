@@ -31,9 +31,6 @@ lut: dict[str, str] = {
     'ü': 'ue'
 }
 
-    #TODO: Terminal-Debug-Out -> Done, will removed with next commit
-    #TODO: Housekeeping, Code-optimization especially for the _read-routines
-
 class tty():
 
     
@@ -45,21 +42,9 @@ class tty():
 
     def _read_conv(self, _in: str) -> str:
         out: str = _in.lower()
-        print("_read_conv (lower): " + out)
         for key, value in lut.items():
             out = out.replace(value, key)
-        print("_read_conv (lut): " + out)
         out = self._read_conv_slashPBE(out)
-        print("_read_conv (capitals): " + out)
-        return out
-    
-    def _read_conv_slashHandler(self, _in: str) -> str:
-        out: str = _in
-        while out.__contains__('/'):
-            for c in range(len(out) -1 ):
-                if out[c] == '/' and c < len(out):
-                    out = out[:c] + out[c+1].upper() + out[c+2:]
-            out = out.replace('°', '/')
         return out
     
     def _read_conv_slashPBE(self, _in: str) -> str:
@@ -83,7 +68,6 @@ class tty():
     def _write(self, _out: str, single_slash: bool = False) -> None:
         _out = self._write_conv(_out)
         if single_slash: _out = _out.replace('//', '/')
-        #print(" [DEBUG] " + _out)
         for c in _out:
             _tty.write(c, "a")
         
@@ -99,7 +83,6 @@ class tty():
                 _out = ""
                 self.prompt(err_prompt)
             if '\n' in _out.lower():
-                #print("[DEBUG_READ]:" + _out)
                 break
             time.sleep(.2)
         _out = _out.replace("\r", "") \
