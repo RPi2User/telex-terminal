@@ -1,10 +1,10 @@
-import txDevED1000SC as ed1000
-#import twTTY_DEBUG
+#import txDevED1000SC as ed1000
+import twTTY_DEBUG
 import time
 import re
 
-_tty: ed1000.TelexED1000SC = ed1000.TelexED1000SC()
-#_tty: twTTY_DEBUG.tty_debug = twTTY_DEBUG.tty_debug()
+# _tty: ed1000.TelexED1000SC = ed1000.TelexED1000SC()
+_tty: twTTY_DEBUG.tty_debug = twTTY_DEBUG.tty_debug()
 
 lut: dict[str, str] = {
     '\n': '\r\n',
