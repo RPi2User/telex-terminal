@@ -3,7 +3,7 @@ import subprocess
 import twSSH
 import twTTY
 # import pyte promising!
-import pty
+# import pty
 
 tty = twTTY.tty()
 
@@ -100,12 +100,12 @@ class cli:
 IP, IPCONFIG + NETC, NETWORKCONFIG + ERR, ERROR + ECHO + BYE
 """
 
-    def help(_helppage: str) -> str:
+    def help(self, _helppage: str | None) -> str:
         try:
             _page: str = _helppage.split(' ')[1]
         except:
             pass
-        match _helppage:
+        match _page:
             case "help": return "help"
             case "short": return "help-short"
             case "lan": return "lan"
@@ -117,6 +117,7 @@ SHORT   : LONG          : DESCRIPTION
 --------:---------------:-----------------------------------------
 ?       : HELP          : SHOWES THIS HELP FILE
 USE     : USAGE         : PRINT SMALL HELP FILE
+WHOAMI  : ------------- : PRINT CURRENT USER
 DATE    : ------------- : PRINT DATE / TIME
 CAL     : CALENDAR      : SHOW SYSTEM CALENDAR
 IP      : IPCONFIG      : SHOW CURRENT SYSTEM IP CONFIGURATION

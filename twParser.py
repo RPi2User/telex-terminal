@@ -11,8 +11,9 @@ class parser():
         _out: str = ""
         _prompt: str = "/"
         match _in.upper():          # Quick and dirty hack!
-            case '?': t._write(c.help())
-            case 'HELP': t._write(c.help(), single_slash=True)
+            case '?': t._write(c.help(""))
+            #case 'HELP': t._write(c.help(""))
+            case str(x) if 'HELP' in x: t._write(c.help(_in), single_slash=True)
             case 'USE': t._write(c.usage())
             case 'USAGE': t._write(c.usage())
             case 'WHOAMI': t._write(c.whoami())
