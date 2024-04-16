@@ -104,7 +104,7 @@ IP, IPCONFIG + NETC, NETWORKCONFIG + ERR, ERROR + ECHO + BYE
         try:
             _page: str = _helppage.split(' ')[1]
         except:
-            pass
+            _page = "long"
         match _page:
             case "help": return "help"
             case "short": return "help-short"
@@ -112,7 +112,7 @@ IP, IPCONFIG + NETC, NETWORKCONFIG + ERR, ERROR + ECHO + BYE
             case "wlan": return "wlan"
             case "misc": return "misc"
             case "seq": return "sequences"
-        return """
+            case "long": return """
 SHORT   : LONG          : DESCRIPTION
 --------:---------------:-----------------------------------------
 ?       : HELP          : SHOWES THIS HELP FILE
