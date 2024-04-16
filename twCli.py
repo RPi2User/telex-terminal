@@ -5,6 +5,12 @@ import twTTY
 # import pyte promising!
 # import pty
 
+"""_summary_
+Still a early version of the CLI. VERY WIP!
+Returns:
+    _type_: CLI of twTTY-Project WIP
+"""
+
 tty = twTTY.tty()
 
 class cli:
@@ -15,17 +21,21 @@ class cli:
     def __init__(self) -> None:
         pass
 
-    def cmd(*_cmd) -> str:
+    def cmd(*_cmd) -> str: # Just for testing
         return str(subprocess.check_output(*_cmd, universal_newlines=True))
     
     def local(self) -> None:
         while True:
-            p: subprocess = subprocess.Popen("bash", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, text=True)
-            tty_stdin: str = tty._read("lcl:/")
-            stdout, stderr = p.communicate(tty_stdin.lower())
-            tty._write(str(stdout + stderr))
-        
-    
+            tty._write("lcl:/ ", True)  # When local-mode is init. no prompt is given to inform the user
+            p: subprocess = subprocess.Popen("bash", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, text=True) #Init Thread for bash Early implementation!
+            _read = tty._read("lcl:/ ") # Need Userinput to pass to bash through
+            if _read() != "exit": # When Userinput = `exit` break loop
+                tty_stdin: str = _read # Else pass userinput to bash
+            else:
+                break
+            stdout, stderr = p.communicate(tty_stdin.lower()) # Get stdout / stderr
+            tty._write(str(stdout + stderr)) # Append outputs and print them
+
     def w(self) -> str:
         #print(self.cmd("ps", "-a", "-u", "-x"))
         return str(subprocess.check_output("w", universal_newlines=True))

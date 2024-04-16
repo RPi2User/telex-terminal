@@ -12,7 +12,6 @@ class parser():
         _prompt: str = "/"
         match _in.upper():          # Quick and dirty hack!
             case '?': t._write(c.help(""))
-            #case 'HELP': t._write(c.help(""))
             case str(x) if 'HELP' in x: t._write(c.help(_in), single_slash=True)
             case 'USE': t._write(c.usage())
             case 'USAGE': t._write(c.usage())
@@ -31,7 +30,7 @@ class parser():
             case 'LCL': c.local()
             case 'LOCAL': c.local()
             case '': pass
-            
+
             case other: t._write("CNF: '" + _in + "' TRY 'HELP'")
             
         if _out != "" : t._write(_out)

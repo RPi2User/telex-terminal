@@ -36,6 +36,7 @@ class tty():
     
     def _write_conv(self, _in: str) -> str:
         out = _in.upper()
+        out = _in.replace('/', '//')
         for key, value in lut.items():
             out: str = out.replace(key, value)
         return out
@@ -67,7 +68,8 @@ class tty():
 
     def _write(self, _out: str, single_slash: bool = False) -> None:
         _out = self._write_conv(_out)
-        if single_slash: _out = _out.replace('//', '/')
+        if single_slash: 
+            _out = _out.replace('//', '/')
         for c in _out:
             _tty.write(c, "a")
         
