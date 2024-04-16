@@ -118,7 +118,7 @@ class tty():
         
 """
 
-import pexpect
+
 
 def execute_interactive_command(command):
     child = pexpect.spawn(command)

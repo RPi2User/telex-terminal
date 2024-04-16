@@ -2,8 +2,10 @@ import os
 import subprocess
 import twSSH
 import twTTY
-# import pyte promising!
-# import pty
+import sys
+import pyte
+import pty
+import pexpect
 
 """_summary_
 Still a early version of the CLI. VERY WIP!
@@ -55,6 +57,10 @@ class cli:
     def uname(self) -> str:
         return str(subprocess.check_output(["uname", "-a"], universal_newlines=True))
     
+    def ptyTest(self) -> None:
+        shell = sys.executable(os.environ.get('SHELL', 'sh'))
+        pty.spawn(shell, tty._read("pty:/ "))
+        pty.
 #    def ssh(self, _host: str, _user: str, _pass: str, local: bool | None) -> None:
 #        twSSH.init(_host, _user, _pass)
 #        _prompt: str = ""
