@@ -1,12 +1,8 @@
-import os
 import subprocess
 import twSSH
 import twTTY
-import sys
-import pyte
-import pty
 import ptyprocess
-import pexpect
+import time
 
 """_summary_
 Still a early version of the CLI. VERY WIP!
@@ -60,12 +56,19 @@ class cli:
     
     def ptyTest(self) -> None:
         pty_proc = ptyprocess.PtyProcessUnicode.spawn(['bash'])
-        tty._write(pty_proc.read())
+        time.sleep(.5)
+        tty._write(pty_proc.read(8192))
         _read: str = ""
         while(_read != "exit"):
             _read = tty._read("lcl:/ ")
             pty_proc.write(_read + "\n")
-            tty._write(pty_proc.read())
+            while(True):
+                time.sleep(.1)
+                _shell_read: str = pty_proc.read(8192)
+                if _shell_read != "":
+                    tty._write(_shell_read)
+                else: break
+            pty_proc
 
     def ssh(self, _host: str, _user: str, _pass: str, local: bool | None) -> None:
         twSSH.init(_host, _user, _pass)
