@@ -5,6 +5,7 @@ import twTTY
 import sys
 import pyte
 import pty
+import ptyprocess
 import pexpect
 
 """_summary_
@@ -58,22 +59,27 @@ class cli:
         return str(subprocess.check_output(["uname", "-a"], universal_newlines=True))
     
     def ptyTest(self) -> None:
-        shell = sys.executable(os.environ.get('SHELL', 'sh'))
-        pty.spawn(shell, tty._read("pty:/ "))
-        pty.
-#    def ssh(self, _host: str, _user: str, _pass: str, local: bool | None) -> None:
-#        twSSH.init(_host, _user, _pass)
-#        _prompt: str = ""
-#        while True:
-#            if local:
-#                _prompt = ".lcl:/ "
-#            else:
-#                _prompt = _user + "." + _host + ":/ "
-#            tty.prompt(_in=_prompt)
-#            _cmd: str = tty._read(err_prompt=_prompt)
-#            if 'exit' in _cmd.lower():
-#                twSSH.exit()
-#                breakutilities
+        pty_proc = ptyprocess.PtyProcessUnicode.spawn(['bash'])
+        tty._write(pty_proc.read())
+        _read: str = ""
+        while(_read != "exit"):
+            _read = tty._read("lcl:/ ")
+            pty_proc.write(_read + "\n")
+            tty._write(pty_proc.read())
+
+    def ssh(self, _host: str, _user: str, _pass: str, local: bool | None) -> None:
+        twSSH.init(_host, _user, _pass)
+        _prompt: str = ""
+        while True:
+            if local:
+                _prompt = ".lcl:/ "
+            else:
+                _prompt = _user + "." + _host + ":/ "
+            tty.prompt(_in=_prompt)
+            _cmd: str = tty._read(err_prompt=_prompt)
+            if 'exit' in _cmd.lower():
+                twSSH.exit()
+                break
         self.ssh(_host="localhost", _user="telex", _pass="telex", local=True)
     
     def debug(self) -> str:

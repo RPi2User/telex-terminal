@@ -10,25 +10,25 @@ class parser():
     def parse(self, _in: str ) -> str:
         _out: str = ""
         _prompt: str = "/"
-        match _in.upper():          # Quick and dirty hack!
+        match _in:
             case '?': t._write(c.help(""))
-            case str(x) if 'HELP' in x: t._write(c.help(_in), single_slash=True)
-            case 'USE': t._write(c.usage())
-            case 'USAGE': t._write(c.usage())
-            case 'WHOAMI': t._write(c.whoami())
-            case 'DATE': t._write(c.date())
-            case 'BYE': c.exit()
-            case 'DEBUG': t._write(c.debug(), single_slash=True)
-            case 'CLEAR': t._write("\n\n\n\n\n\n\n\n\n")
-            case 'CLS': t._write("\n\n\n\n\n\n\n\n\n")
-            case 'CAL': t._write(c.cal())
-            case 'CALENDAR' : t._write(c.cal())
-            case 'W': t._write(c.w())
-            case 'PS': t._write(c.psa())
-            case 'UNAME': t._write(c.uname())
-            case 'SSH': c.ssh()
-            case 'LCL': c.local()
-            case 'LOCAL': c.local()
+            case str(x) if 'help' in x: t._write(c.help(_in), single_slash=True)
+            case 'use': t._write(c.usage())
+            case 'usage': t._write(c.usage())
+            case 'whoami': t._write(c.whoami())
+            case 'date': t._write(c.date())
+            case 'bye': c.exit()
+            case 'debug': t._write(c.debug(), single_slash=True)
+            case 'clear': t._write("\n\n\n\n\n\n\n\n\n")
+            case 'cls': t._write("\n\n\n\n\n\n\n\n\n")
+            case 'cal': t._write(c.cal())
+            case 'calendar' : t._write(c.cal())
+            case 'w': t._write(c.w())
+            case 'ps': t._write(c.psa())
+            case 'uname': t._write(c.uname())
+            case 'ssh': c.ssh()
+            case 'lcl': c.ptyTest()
+            case 'local': c.local()
             case '': pass
 
             case other: t._write("CNF: '" + _in + "' TRY 'HELP'")
