@@ -62,13 +62,14 @@ class cli:
         while(_read != "exit"):
             _read = tty._read("lcl:/ ")
             pty_proc.write(_read + "\n")
-            while(True):
-                time.sleep(.1)
+            time.sleep(.1)
+            try: # Needed when first Command is "exit"
                 _shell_read: str = pty_proc.read(8192)
-                if _shell_read != "":
-                    tty._write(_shell_read)
-                else: break
-            pty_proc
+            except:
+                pass
+            tty._write(_shell_read)
+
+
 
     def ssh(self, _host: str, _user: str, _pass: str, local: bool | None) -> None:
         twSSH.init(_host, _user, _pass)
