@@ -33,7 +33,7 @@ lut: dict[str, str] = {
 
 class tty():
 
-    
+
     def _write_conv(self, _in: str) -> str:
         out = _in.upper()
         out = _in.replace('/', '//')
@@ -114,22 +114,3 @@ class tty():
         _tty._check_commands('\x1bZ')
         _tty.exit()
         exit(0)
-        
-        
-"""
-
-
-
-def execute_interactive_command(command):
-    child = pexpect.spawn(command)
-    child.expect(pexpect.EOF)
-    return child.before.decode()
-
-# Beispielbefehl
-command = "su"  # oder ein beliebiger anderer interaktiver Befehl
-
-# Befehl ausführen und Ausgabe lesen
-output = execute_interactive_command(command)
-
-print("Ausgabe des Befehls:", output)
-"""

@@ -27,7 +27,7 @@ class parser():
             case 'ps': t._write(c.psa())
             case 'uname': t._write(c.uname())
             case 'ssh': c.ssh()
-            case 'lcl': c.ptyTest()
+            case 'lcl': c.local()
             case 'local': c.local()
             case '': pass
 
