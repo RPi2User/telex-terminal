@@ -71,12 +71,13 @@ class tty():
         return s
 
     def _write(self, _out: str, single_slash: bool = False) -> None:
-        _out = _out + _current_trailer
-        _out = self._write_conv(_out)
-        if single_slash: 
-            _out = _out.replace('//', '/')
-        for c in _out:
-            _tty.write(c, "a")
+        if _out != "":
+            _out = _out + _current_trailer
+            _out = self._write_conv(_out)
+            if single_slash: 
+                _out = _out.replace('//', '/')
+            for c in _out:
+                _tty.write(c, "a")
         
     
     def _read(self) -> str:

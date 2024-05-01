@@ -1,5 +1,4 @@
 import subprocess
-import twSSH
 import twTTY
 import ptyprocess
 import time
