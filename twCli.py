@@ -47,21 +47,20 @@ class cli:
     
     def local(self) -> None:
         pty_proc = ptyprocess.PtyProcessUnicode.spawn(['bash'])
-        twTTY._current_trailer("lcl:/")
+        twTTY._current_trailer = ""
         time.sleep(.5)
-        tty._write(pty_proc.read(8192))
+        twTTY._tx_buffer = pty_proc.read(8192)
+        tty._write()
         _read: str = ""
         while(_read != "exit"):
-            print("twCli.py: 51")
             _read = tty._read()
-            print("twCli.py: 53")
             pty_proc.write(_read + "\n")
             time.sleep(.1)
             try: # Needed when first Command is "exit"
                 _shell_read: str = pty_proc.read(8192)
             except:
                 pass
-            tty._write(_shell_read)
+            twTTY._tx_buffer = _shell_read
 
 
     

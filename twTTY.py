@@ -70,7 +70,8 @@ class tty():
             s = s[:slash+1] + s[capital].upper() + s[capital + 1:]
         return s
 
-    def _write(self, _out: str, single_slash: bool = False) -> None:
+    def _write(self, single_slash: bool = False) -> None:
+        _out: str = _tx_buffer
         if _out != "":
             _out = _out + _current_trailer
             _out = self._write_conv(_out)
@@ -114,12 +115,14 @@ class tty():
     def init(self) -> None:
         _tty._check_commands('\x1bA')
         time.sleep(.1)
-        self._write("CRT0 READY")
+        _tx_buffer = "CRT0 READY"
+        self._write()
         self.prompt("/")
 
 
     def exit(self) -> None:
-        self._write("BYE")
+        _tx_buffer = "BYE"
+        self._write()
         time.sleep(.5)
         _tty._check_commands('\x1bZ')
         _tty.exit()

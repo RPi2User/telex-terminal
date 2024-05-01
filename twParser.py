@@ -26,7 +26,7 @@ class parser():
             case 'w': twTTY._tx_buffer += c.w()
             case 'ps': twTTY._tx_buffer += c.psa()
             case 'uname': twTTY._tx_buffer += c.uname()
-            case 'ssh': c.ssh()
+            case 'ssh': c.local()
             case 'lcl': c.local()
             case 'local': c.local()
             case '': pass

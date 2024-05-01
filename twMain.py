@@ -12,11 +12,11 @@ def main():
         sleep(0.5)
         twTTY._current_trailer="/"
         twTTY._rx_buffer = tty._read()
-        print("[DEBUG] rx_buffer" + twTTY._rx_buffer)
         if twTTY._rx_buffer == "":
-            tty._write(twTTY._tx_buffer)
-            continue
-        if twTTY._rx_buffer.__contains__("\n"):
+            tty._write()
+            twTTY._tx_buffer = ""
+        else:
+            print("[PARSING] " + twTTY._rx_buffer)
             p.parse(twTTY._rx_buffer)
 
 
