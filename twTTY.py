@@ -78,9 +78,13 @@ class tty():
         _out: str = ""
         while True:
             try:
+                time.sleep(.25)
                 _out += _tty.read()
             except:
-                pass
+                if _out == "":
+                    return _out
+                else:
+                    pass
             if 'err' in _out.lower():
                 _out = ""
                 self.prompt(err_prompt)
@@ -88,9 +92,9 @@ class tty():
                 break
             time.sleep(.2)
         _out = _out.replace("\r", "") \
-                    .replace("\n", "") \
-                    .replace(">", "") \
-                    .replace("<", "")
+                   .replace("\n", "") \
+                   .replace(">", "") \
+                   .replace("<", "")
         _out = self._read_conv(_out)
         return _out
         
