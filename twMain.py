@@ -8,7 +8,9 @@ tty: twTTY.tty = twTTY.tty()
 def main():
     tty.init()
     while True:
-        twTTY._rx_buffer = tty._read(err_prompt="/")
+        twTTY._current_trailer="/"
+        twTTY._rx_buffer = tty._read()
+        print("[DEBUG] rx_buffer" + twTTY._rx_buffer)
         if twTTY._rx_buffer == "":
             tty._write(twTTY._tx_buffer)
             continue

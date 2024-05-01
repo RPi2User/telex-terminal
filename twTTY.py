@@ -8,6 +8,7 @@ _tty: ed1000.TelexED1000SC = ed1000.TelexED1000SC()
 
 _rx_buffer: str = ""
 _tx_buffer: str = ""
+_current_trailer: str = ""
 
 lut: dict[str, str] = {
     '\n': '\r\n',
@@ -70,6 +71,7 @@ class tty():
         return s
 
     def _write(self, _out: str, single_slash: bool = False) -> None:
+        _out = _out + _current_trailer
         _out = self._write_conv(_out)
         if single_slash: 
             _out = _out.replace('//', '/')
@@ -77,7 +79,7 @@ class tty():
             _tty.write(c, "a")
         
     
-    def _read(self, err_prompt: str) -> str:
+    def _read(self) -> str:
         _out: str = ""
         while True:
             try:
@@ -90,7 +92,7 @@ class tty():
                     pass
             if 'err' in _out.lower():
                 _out = ""
-                self.prompt(err_prompt)
+                self.prompt(_current_trailer)
             if '\n' in _out.lower():
                 break
             time.sleep(.2)

@@ -48,12 +48,13 @@ class cli:
     
     def local(self) -> None:
         pty_proc = ptyprocess.PtyProcessUnicode.spawn(['bash'])
+        twTTY._current_trailer("lcl:/")
         time.sleep(.5)
         tty._write(pty_proc.read(8192))
         _read: str = ""
         while(_read != "exit"):
             print("twCli.py: 51")
-            _read = tty._read("lcl:/ ")
+            _read = tty._read()
             print("twCli.py: 53")
             pty_proc.write(_read + "\n")
             time.sleep(.1)
