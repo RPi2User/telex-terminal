@@ -11,29 +11,29 @@ class parser():
         _out: str = ""
         _prompt: str = "/"
         match _in:
-            case '?': t._write(c.help(""))
-            case str(x) if 'help' in x: t._write(c.help(_in), single_slash=True)
-            case 'use': t._write(c.usage())
-            case 'usage': t._write(c.usage())
-            case 'whoami': t._write(c.whoami())
-            case 'date': t._write(c.date())
+            case '?': twTTY._tx_buffer += c.help("")
+            case str(x) if 'help' in x: twTTY._tx_buffer += c.help(_in)
+            case 'use': twTTY._tx_buffer += c.usage()
+            case 'usage': twTTY._tx_buffer += c.usage()
+            case 'whoami': twTTY._tx_buffer += c.whoami()
+            case 'date': twTTY._tx_buffer += c.date()
             case 'bye': c.exit()
-            case 'debug': t._write(c.debug(), single_slash=True)
-            case 'clear': t._write("\n\n\n\n\n\n\n\n\n")
-            case 'cls': t._write("\n\n\n\n\n\n\n\n\n")
-            case 'cal': t._write(c.cal())
-            case 'calendar' : t._write(c.cal())
-            case 'w': t._write(c.w())
-            case 'ps': t._write(c.psa())
-            case 'uname': t._write(c.uname())
+            case 'debug': twTTY._tx_buffer += c.debug()
+            case 'clear': twTTY._tx_buffer += "\n\n\n\n\n\n\n\n\n"
+            case 'cls': twTTY._tx_buffer += "\n\n\n\n\n\n\n\n\n"
+            case 'cal': twTTY._tx_buffer += c.cal()
+            case 'calendar' : twTTY._tx_buffer += c.cal()
+            case 'w': twTTY._tx_buffer += c.w()
+            case 'ps': twTTY._tx_buffer += c.psa()
+            case 'uname': twTTY._tx_buffer += c.uname()
             case 'ssh': c.ssh()
             case 'lcl': c.local()
             case 'local': c.local()
             case '': pass
 
-            case other: t._write("CNF: '" + _in + "' TRY 'HELP'")
+            case other: twTTY._tx_buffer += "CNF: '" + _in + "' TRY 'HELP'"
             
-        if _out != "" : t._write(_out)
+        if _out != "" : twTTY._tx_buffer += _out
         t.prompt(_prompt)
     
     def __init__(self) -> None:

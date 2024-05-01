@@ -6,6 +6,9 @@ import re
 _tty: ed1000.TelexED1000SC = ed1000.TelexED1000SC()
 #_tty: twTTY_DEBUG.tty_debug = twTTY_DEBUG.tty_debug()
 
+_rx_buffer: str = ""
+_tx_buffer: str = ""
+
 lut: dict[str, str] = {
     '\n': '\r\n',
     '!': '/?',
