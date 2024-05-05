@@ -1,3 +1,4 @@
+import twBuffer
 import txDevED1000SC as ed1000
 import twTTY_DEBUG
 import time
@@ -5,10 +6,6 @@ import re
 
 _tty: ed1000.TelexED1000SC = ed1000.TelexED1000SC()
 #_tty: twTTY_DEBUG.tty_debug = twTTY_DEBUG.tty_debug()
-
-_rx_buffer: str = ""
-_tx_buffer: str = ""
-_current_trailer: str = ""
 
 lut: dict[str, str] = {
     '\n': '\r\n',
@@ -71,15 +68,15 @@ class tty():
         return s
 
     def _write(self, single_slash: bool = False) -> None:
-        if _tx_buffer != "": print("[tx] " + self._tx_buffer)
-        if self._tx_buffer != "":
-            self._tx_buffer += _current_trailer
-            self._tx_buffer = self._write_conv(self._tx_buffer)
+        if twBuffer._tx != "":
+            print("[tx] " + twBuffer._tx)                   # DEBUG Purpose
+            twBuffer._tx += twBuffer._trailer               # Append trailer, maybe a cr-lf is mandatory!
+            twBuffer._tx = self._write_conv(twBuffer._tx)   # Convert via LUT
             if single_slash: 
-                self._tx_buffer = self._tx_buffer.replace('//', '/')
-            for c in self._tx_buffer:
+                twBuffer._tx = twBuffer._tx.replace('//', '/')  # Slash Conversion
+            for c in twBuffer._tx:                          # Write char for char to Hardware
                 _tty.write(c, "a")
-        self._tx_buffer = ""
+        twBuffer._tx = ""                                   # Clear buffer
         
     
     def _read(self) -> None:
@@ -104,17 +101,16 @@ class tty():
         self._rx_buffer = self._read_conv(self._rx_buffer)
         
 
-    def prompt(self, _in: str) -> None:
+    def prompt(self, _in: str) -> None: # Is this needed?
         _tty.write('\r', "a")
         _tty.write('\n', "a")
         for c in _in:
             _tty.write(c, "a")
         
     def init(self) -> None:
-        _tty._check_commands('\x1bA')
-        time.sleep(.1)
-        self._tx_buffer = "CRT0 READY"
-        self._write()
+        _tty._check_commands('\x1bA')   # Establish Connection to TTY
+        time.sleep(.1)                  # Wait
+        twBuffer._tx += "CRT0 READY"    # Append CRT0 READY
         self.prompt("/")
 
 
