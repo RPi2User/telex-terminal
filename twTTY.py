@@ -80,25 +80,25 @@ class tty():
         
     
     def _read(self) -> None:
-        self._rx_buffer: str = ""
+        twBuffer._rx = ""
         while True:
             try:
                 time.sleep(.25)
-                self._rx_buffer += _tty.read()
-                print("[RX-B] " + self._rx_buffer)
+                twBuffer._rx += _tty.read()
+                print("[RX-B] " + twBuffer._rx)
             except:
                 pass
-            if 'err' in self._rx_buffer.lower():
-                self._rx_buffer = ""
-                self._tx_buffer += "\r\n"
-            if '\n' in self._rx_buffer:
+            if 'err' in twBuffer._rx.lower():
+                twBuffer._rx = ""
+                twBuffer._tx += "\r\n"
+            if '\n' in twBuffer._rx:
                 break
             time.sleep(.2)
-        self._rx_buffer = self._rx_buffer.replace("\r", "") \
-                                .replace("\n", "") \
-                                .replace(">", "") \
-                                .replace("<", "")
-        self._rx_buffer = self._read_conv(self._rx_buffer)
+        twBuffer._rx = twBuffer._rx.replace("\r", "") \
+                                    .replace("\n", "") \
+                                    .replace(">", "") \
+                                    .replace("<", "")
+        twBuffer._rx = self._read_conv(twBuffer._rx)
         
 
     def prompt(self, _in: str) -> None: # Is this needed?
@@ -115,7 +115,7 @@ class tty():
 
 
     def exit(self) -> None:
-        self._tx_buffer = "BYE"
+        twBuffer._tx = "BYE"
         self._write()
         time.sleep(.5)
         _tty._check_commands('\x1bZ')
