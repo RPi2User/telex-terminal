@@ -1,5 +1,6 @@
 import subprocess
 import twTTY
+import twBuffer
 import ptyprocess
 import time
 
@@ -49,18 +50,18 @@ class cli:
         pty_proc = ptyprocess.PtyProcessUnicode.spawn(['bash'])
         twTTY._current_trailer = ""
         time.sleep(.5)
-        twTTY._tx_buffer = pty_proc.read(8192)
+        twBuffer._tx = pty_proc.read(8192)
         tty._write()
-        _read: str = ""
+        _read: str = twBuffer._rx
         while(_read != "exit"):
-            _read = tty._read()
-            pty_proc.write(_read + "\n")
+            tty._write()
+            tty._read()
+            pty_proc.write(twBuffer._rx + "\n")
             time.sleep(.1)
             try: # Needed when first Command is "exit"
-                _shell_read: str = pty_proc.read(8192)
+                twBuffer._tx = pty_proc.read(8192)
             except:
                 pass
-            twTTY._tx_buffer = _shell_read
 
 
     

@@ -109,7 +109,7 @@ class tty():
     def init(self) -> None:
         _tty._check_commands('\x1bA')   # Establish Connection to TTY
         time.sleep(.1)                  # Wait
-        twBuffer._tx += "CRT0 READY"    # Append CRT0 READY
+        twBuffer._tx += "CRT0 READY\r\n"    # Append CRT0 READY
         self.prompt("/")
 
 
