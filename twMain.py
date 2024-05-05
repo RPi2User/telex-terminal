@@ -11,7 +11,6 @@ def main():
     while True:
         sleep(0.5)
         twTTY._current_trailer="/"
-        twTTY._rx_buffer = tty._read()
         if twTTY._rx_buffer == "":
             tty._write()
         else:
