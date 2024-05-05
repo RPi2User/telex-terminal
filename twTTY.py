@@ -71,13 +71,13 @@ class tty():
         return s
 
     def _write(self, single_slash: bool = False) -> None:
-        _out: str = _tx_buffer
-        if _out != "":
-            _out += _current_trailer
-            _out = self._write_conv(_out)
+        print("[tx] " + _tx_buffer)
+        if _tx_buffer != "":
+            _tx_buffer += _current_trailer
+            _tx_buffer = self._write_conv(_tx_buffer)
             if single_slash: 
-                _out = _out.replace('//', '/')
-            for c in _out:
+                _tx_buffer = _tx_buffer.replace('//', '/')
+            for c in _tx_buffer:
                 _tty.write(c, "a")
         _tx_buffer = ""
         
@@ -101,7 +101,7 @@ class tty():
                                 .replace(">", "") \
                                 .replace("<", "")
         _rx_buffer = self._read_conv(_rx_buffer)
-        
+        print("[rx] " + _rx_buffer)
 
     def prompt(self, _in: str) -> None:
         _tty.write('\r', "a")
