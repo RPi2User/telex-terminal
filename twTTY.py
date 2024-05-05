@@ -73,37 +73,34 @@ class tty():
     def _write(self, single_slash: bool = False) -> None:
         _out: str = _tx_buffer
         if _out != "":
-            _out = _out + _current_trailer
+            _out += _current_trailer
             _out = self._write_conv(_out)
             if single_slash: 
                 _out = _out.replace('//', '/')
             for c in _out:
                 _tty.write(c, "a")
+        _tx_buffer = ""
         
     
-    def _read(self) -> str:
-        _out: str = ""
+    def _read(self) -> None:
+        _rx_buffer: str = ""
         while True:
             try:
                 time.sleep(.25)
-                _out += _tty.read()
+                _rx_buffer += _tty.read()
             except:
-                if _out == "":
-                    return _out
-                else:
-                    pass
-            if 'err' in _out.lower():
-                _out = ""
-                self.prompt(_current_trailer)
-            if '\n' in _out.lower():
+                pass
+            if 'err' in _rx_buffer.lower():
+                _rx_buffer = ""
+                _tx_buffer += "\r\n"
+            if '\n' in _rx_buffer:
                 break
             time.sleep(.2)
-        _out = _out.replace("\r", "") \
-                   .replace("\n", "") \
-                   .replace(">", "") \
-                   .replace("<", "")
-        _out = self._read_conv(_out)
-        return _out
+        _rx_buffer = _rx_buffer.replace("\r", "") \
+                                .replace("\n", "") \
+                                .replace(">", "") \
+                                .replace("<", "")
+        _rx_buffer = self._read_conv(_rx_buffer)
         
 
     def prompt(self, _in: str) -> None:

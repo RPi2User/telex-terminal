@@ -14,7 +14,6 @@ def main():
         twTTY._rx_buffer = tty._read()
         if twTTY._rx_buffer == "":
             tty._write()
-            twTTY._tx_buffer = ""
         else:
             print("[PARSING] " + twTTY._rx_buffer)
             p.parse(twTTY._rx_buffer)
