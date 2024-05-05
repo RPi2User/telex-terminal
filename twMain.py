@@ -14,6 +14,7 @@ def main():
         if twTTY._rx_buffer == "":
             tty._write()
             tty._read()
+            print("[RX-CLS] " + twTTY._rx_buffer)
         else:
             print("[PARSING] " + twTTY._rx_buffer)
             p.parse(twTTY._rx_buffer)
