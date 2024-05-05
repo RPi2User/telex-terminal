@@ -48,7 +48,7 @@ class cli:
     
     def local(self) -> None:
         pty_proc = ptyprocess.PtyProcessUnicode.spawn(['bash'])
-        twTTY._current_trailer = ""
+        twBuffer._trailer = ""
         time.sleep(.5)
         twBuffer._tx = pty_proc.read(8192)
         tty._write()
