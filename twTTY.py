@@ -71,7 +71,7 @@ class tty():
         return s
 
     def _write(self, single_slash: bool = False) -> None:
-        print("[tx] " + self._tx_buffer)
+        if _tx_buffer != "": print("[tx] " + self._tx_buffer)
         if self._tx_buffer != "":
             self._tx_buffer += _current_trailer
             self._tx_buffer = self._write_conv(self._tx_buffer)

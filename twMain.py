@@ -13,9 +13,11 @@ def main():
         twTTY._current_trailer="/"
         if twTTY._rx_buffer == "":
             tty._write()
+            tty._read()
         else:
             print("[PARSING] " + twTTY._rx_buffer)
             p.parse(twTTY._rx_buffer)
+            twTTY._rx_buffer = "" # WIP for DEBUG purposes
 
 
 if __name__== "__main__":
