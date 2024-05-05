@@ -88,6 +88,7 @@ class tty():
             try:
                 time.sleep(.25)
                 self._rx_buffer += _tty.read()
+                print("[RX-B] " + self._rx_buffer)
             except:
                 pass
             if 'err' in self._rx_buffer.lower():
@@ -101,7 +102,7 @@ class tty():
                                 .replace(">", "") \
                                 .replace("<", "")
         self._rx_buffer = self._read_conv(self._rx_buffer)
-        print("[rx] " + self._rx_buffer)
+        
 
     def prompt(self, _in: str) -> None:
         _tty.write('\r', "a")
