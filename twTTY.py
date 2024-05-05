@@ -71,37 +71,37 @@ class tty():
         return s
 
     def _write(self, single_slash: bool = False) -> None:
-        print("[tx] " + _tx_buffer)
-        if _tx_buffer != "":
-            _tx_buffer += _current_trailer
-            _tx_buffer = self._write_conv(_tx_buffer)
+        print("[tx] " + self._tx_buffer)
+        if self._tx_buffer != "":
+            self._tx_buffer += _current_trailer
+            self._tx_buffer = self._write_conv(self._tx_buffer)
             if single_slash: 
-                _tx_buffer = _tx_buffer.replace('//', '/')
-            for c in _tx_buffer:
+                self._tx_buffer = self._tx_buffer.replace('//', '/')
+            for c in self._tx_buffer:
                 _tty.write(c, "a")
-        _tx_buffer = ""
+        self._tx_buffer = ""
         
     
     def _read(self) -> None:
-        _rx_buffer: str = ""
+        self._rx_buffer: str = ""
         while True:
             try:
                 time.sleep(.25)
-                _rx_buffer += _tty.read()
+                self._rx_buffer += _tty.read()
             except:
                 pass
-            if 'err' in _rx_buffer.lower():
-                _rx_buffer = ""
-                _tx_buffer += "\r\n"
-            if '\n' in _rx_buffer:
+            if 'err' in self._rx_buffer.lower():
+                self._rx_buffer = ""
+                self._tx_buffer += "\r\n"
+            if '\n' in self._rx_buffer:
                 break
             time.sleep(.2)
-        _rx_buffer = _rx_buffer.replace("\r", "") \
+        self._rx_buffer = self._rx_buffer.replace("\r", "") \
                                 .replace("\n", "") \
                                 .replace(">", "") \
                                 .replace("<", "")
-        _rx_buffer = self._read_conv(_rx_buffer)
-        print("[rx] " + _rx_buffer)
+        self._rx_buffer = self._read_conv(self._rx_buffer)
+        print("[rx] " + self._rx_buffer)
 
     def prompt(self, _in: str) -> None:
         _tty.write('\r', "a")
@@ -112,13 +112,13 @@ class tty():
     def init(self) -> None:
         _tty._check_commands('\x1bA')
         time.sleep(.1)
-        _tx_buffer = "CRT0 READY"
+        self.self._tx_buffer = "CRT0 READY"
         self._write()
         self.prompt("/")
 
 
     def exit(self) -> None:
-        _tx_buffer = "BYE"
+        self._tx_buffer = "BYE"
         self._write()
         time.sleep(.5)
         _tty._check_commands('\x1bZ')
