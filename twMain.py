@@ -15,7 +15,6 @@ def main():
         if twBuffer._rx == "":  # When nothing is received, write buffer
             tty._write()        # Write current buffer
             tty._read()         # read back from TTY
-            print("[RX-CLS] " + twBuffer._rx)   # DEBUG
         else:
             print("[PARSING] " + twBuffer._rx)  # DEBUG
             p.parse(twBuffer._rx)               # Parse given input

@@ -85,7 +85,6 @@ class tty():
             try:
                 time.sleep(.25)
                 twBuffer._rx += _tty.read()
-                print("[RX-B] " + twBuffer._rx)
             except:
                 pass
             if 'err' in twBuffer._rx.lower():
